@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .noundline {
+        text-decoration: none;
+    }
+
+    .not-visible {
+        display: none;
+    }
+
+    h1 {
+        color: white;
+    }
+
+</style>
+<div class="text-center">
+    <div class="spinner-border" role="status" id="spinner"></div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card card-default rounded-0 shadow ">
+        <div class="card-header">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+                <h4 class="card-title fw-bold">Class List</h4>
+                <div class="tools">
+                    <a class="btn btn-outline-info rounded-0 bg-gradient btn-sm" href="{% url 'appO:AddClasses' %}"
+                        title="Add Class"><i class="fa fa-solid fa-plus"></i> Add Classe
+                    </a>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="container-fluid">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr class="bg-danger bg-opacity-0 text-light">
+                            <th scope="col" class="px-2 py-2 text-center">Classe</th>
+                            <th scope="col" class="px-2 py-2 text-center">Attendee</th>
+                            <th scope="col" class="px-2 py-2 text-center">Nrb Eleve</th>
+                            <th scope="col" class="px-2 py-2 text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body-box">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    const spinner = document.getElementById('spinner')
+    const tableBody = document.getElementById('table-body-box')
+
+    if ('{{listClass}}') {
+        setTimeout(() => {
+            spinner.classList.add('not-visible')
+            tableBody.innerHTML += `
+                {% for classe in listClass %}
+                    <tr>
+                        <td class="px-2 py-1 text-center">
+                            <a class="link-dark noundline" href="{% url 'appO:dashClass' pk=classe.pk %}">
+                                {{ classe.Classe_name }} {{ classe.school_year }}
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-outline-info btn-sm" href="{% url 'appO:o_attendence' klasname=classe.Classe_name %}" title="See Attendace of {{ classe.Classe_name }}">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'appO:o_attmgt' klasname=classe.Classe_name skooY=classe.school_year pk=classe.pk %}" title="Add Attendace to {{ classe.Classe_name }}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                        <td class="px-2 py-1 text-center">
+                            <a class="link-dark noundline" href="{% url 'appO:o_listStudent' pk=classe.pk %}">
+                            {% if classe.eleve_set.count > 1 %}
+                            <strong> {{ classe.eleve_set.count }} Eleves</strong>
+                            </a>
+                            {% else %}
+                            <strong> {{ classe.eleve_set.count }} Eleve</strong>
+                            {% endif %}
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-outline-primary btn-sm edit-data" title="Edit" href="{% url 'appO:UpdateClasses' classe.slug %}">
+                                <i class="fa fa-edit"></i>
+                                </a>
+                            <a class="btn btn-outline-danger btn-sm delete-data" title="Delete" href="{% url 'appO:DeleteClasses' classe.slug %}">
+                                    <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                `
+        }, 500)
+    } else {
+        setTimeout(() => {
+            spinner.classList.add('not-visible')
+            tableBody.innerHTML += `
+                <p>Failed to load data</p>
+                `
+        }, 500)
+    }
+</script>
+{% endblock %}

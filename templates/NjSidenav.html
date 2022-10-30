@@ -1,0 +1,94 @@
+<ul class="nj-side-list">
+    <li class="nj-side-item">
+        <a href="{% url 'appMain:home' %}">
+            <span class="menu-icon">
+                <i class="fa fa-light fa-school"></i>
+            </span>
+            <span class="menu-title">Home</span>
+        </a>
+    </li>
+    {% if user.is_authenticated %}
+    {% if user.is_student %}
+    <li class="nj-side-item">
+        <a href="#student">
+            <span class="menu-icon">
+                <i class="fa fa-light fa-list"></i>
+            </span>
+            <span class="menu-title">Classes</span>
+        </a>
+    </li>
+    {% elif user.is_teacher %}
+    <li class="nj-side-item">
+        <a href="#teacher">
+            <span class="menu-icon">
+                <i class="fa fa-light fa-list"></i>
+            </span>
+            <span class="menu-title">Classes</span>
+        </a>
+    </li>
+    {% elif user.is_overseer %}
+    <li class="nj-side-item">
+        <a href="{% url 'appO:o_listTeacher' %}">
+            <span class="menu-icon">
+                <i class="fa fa-light fa-list"></i>
+            </span>
+            <span class="menu-title">List Teacher</span>
+        </a>
+    </li>
+    <li class="nj-side-item">
+        <a href="{% url 'appO:o_listClasses' %}">
+            <span class="menu-icon">
+                <i class="fa fa-light fa-list"></i>
+            </span>
+            <span class="menu-title">Classes</span>
+        </a>
+    </li>
+    {% else %}
+    <li class="nj-side-item">
+        <a class="disabled" href="#">
+            <span class="menu-icon">
+                <i class="fa fa-light fa-list"></i>
+            </span>
+            <span class="menu-title">Classes</span>
+        </a>
+    </li>
+    {% endif %}
+    {% endif %}
+    <li class="nj-side-item">
+        <a href="#">
+            <span class="menu-icon">
+                <i class="fa fa-regular fa-circle-info"></i>
+            </span>
+            <span class="menu-title">About Us</span>
+        </a>
+    </li>
+    <div class="nj-side-list-footer">
+        <span>
+            {% if user.is_authenticated %}
+            <li class="nj-side-item">
+                <a href="{% url 'profile'%}">
+                    <img src="{{ user.profile.image.url }}" class="user_avatar">
+                    <span class="menu-title">{{ user.get_username }}</span>
+                </a>
+            </li>
+            {% else %}
+            <li class="nj-side-item">
+                <a class="nav-link" href="{% url 'login'%}?next={{request.path}}">
+                    <span class="menu-icon">
+                        <i class="fa fa-thin fa-arrow-right-to-bracket"></i>
+                    </span>
+                    <span class="menu-title">Login</span>
+                </a>
+            </li>
+            <li class="nj-side-item">
+                <a href="{% url 'register'%}">
+                    <span class="menu-icon">
+                        <i class="fa fa-thin fa-user-plus"></i>
+                    </span>
+                    <span class="menu-title">Sign Up</span>
+                </a>
+            </li>
+            {% endif %}
+        </span>
+    </div>
+</ul>

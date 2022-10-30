@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .noundline {
+        text-decoration: none;
+    }
+
+    .not-visible {
+        display: none;
+    }
+
+</style>
+<div class="text-center">
+    <div class="spinner-border" role="status" id="spinner"></div>
+</div>
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card card-default rounded-0 shadow ">
+        <div class="card-header">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+                <div class="tools">
+                    <a class="btn btn-outline-info" onclick="history.back()" title="Go to Student List"><i
+                            class="fa fa-regular fa-arrow-left"></i></a>
+                </div>
+                <h4 class="card-title fw-bold" id="catp"></h4>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12" id="body-box">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="module">
+    const spinner = document.getElementById('spinner')
+    const tete = document.getElementById('catp')
+    const tableBody = document.getElementById('body-box')
+
+    if ('{{student}}') {
+        setTimeout(() => {
+            spinner.classList.add('not-visible')
+            tete.innerHTML += `Class: {{ student.class_id.Classe_name }}({{ student.class_id.school_year }}) ,Prof Resp: {{ student.class_id.teacher_responsable.nom }} {{ student.class_id.teacher_responsable.prenom }}`
+            tableBody.innerHTML += `
+                        <dl>
+                            <dt class="text-muted">Fullname:</dt>
+                            <dd class="ps-3">{{ student.nom }} {{ student.prenom }}</dd>
+                            <dt class="text-muted">Gender:</dt>
+                            <dd class="ps-3">{{ student.gender }}</dd>
+                            <dt class="text-muted">Birthday:</dt>
+                            <dd class="ps-3">{{ student.dob|date:"d F Y" }} à {{ student.pob }}</dd>
+                        </dl>
+                `
+        }, 500)
+    } else {
+        setTimeout(() => {
+            spinner.classList.add('not-visible')
+            tableBody.innerHTML += `
+                <p>Failed to load data</p>
+                `
+        }, 500)
+    }
+</script>
+{% endblock %}

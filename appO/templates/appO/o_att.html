@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .noundline {
+        text-decoration: none;
+    }
+
+    .not-visible {
+        display: none;
+    }
+
+</style>
+<div class="text-center">
+    <div class="spinner-border" role="status" id="spinner"></div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card card-default rounded-0 shadow ">
+        <div class="card-header">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+                <h4 class="card-title fw-bold" id="catp"></h4>
+
+                <div class="tools">
+                    <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                </div>
+            </div>
+        </div>
+        <div class="card-body text-center">
+            <table class="table table-hover table-borderless">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">Classe</th>
+                        <th scope="col" class="text-center">student Name</th>
+                        <th scope="col" class="text-center">Date</th>
+                        <th scope="col" class="text-center">status</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-box">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script language="JavaScript" type="text/javascript">
+    const spinner = document.getElementById('spinner')
+    const tabletitle = document.getElementById('catp')
+    const tableBody = document.getElementById('table-body-box')
+    if ('{{listPresence}}') {
+        setTimeout(() => {
+            spinner.classList.add('not-visible')
+            tabletitle.innerHTML += `{{ klasname }}`
+            tableBody.innerHTML += `
+            {% for att in listPresence %}
+            {% if att.student.class_id.Classe_name == klasname %}
+            <tr>
+                <td class="text-center">{{ att.student.class_id.Classe_name }}({{ att.student.class_id.school_year }})</td>
+                <td class="text-center">{{ att.student }}</td>
+                <td class="text-center">{{ att.attendance_date|date:"d F Y"}}</td>
+                {% if att.status %}
+                <td class="text-center">
+                    <p style="color:greenyellow">Présent(e)</p>
+                </td>
+                {% else %}
+                <td class="text-center">
+                    <p style="color:red">Abscent(e)
+                </td>
+                {% endif %}
+            </tr>
+            {% endif %}
+            {% endfor %}
+              `
+
+        }, 500)
+    } else {
+        setTimeout(() => {
+            spinner.classList.add('not-visible')
+            tableBody.innerHTML += `
+            <tr>
+                <p>Failed to load data</p>
+            </tr>
+                `
+        }, 500)
+    }
+</script>
+<script type="module">
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#table-body-box tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+{% endblock %}

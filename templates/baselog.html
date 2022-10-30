@@ -1,0 +1,96 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Nj Mcl">
+    <!-- Webpage Title -->
+    {% if page_title %}
+    <title>{{ page_title }} | School Management System</title>
+    {% else %}
+    <title>School Management System</title>
+    {% endif %}
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css'%}">
+    <!-- Font-Awesome CSS -->
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/fontawesome.min.css'%}">
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
+
+    <link rel="stylesheet" href="{% static 'nj/css/NjStyle.css'%}">
+    {% block headContent %}
+    {% endblock headContent %}
+</head>
+
+<body>
+    <header class="nj-header" id="nj-header">
+        <div class="nj-logo-wrapper">
+            <a href="{% url 'appMain:home' %}" class="nj-logo"><img src="{% static 'img/mytitle.png' %}" alt="Logo"></a>
+        </div>
+        <ul class="nj-header-list">
+            {% if user.is_authenticated %}
+            <li class="nj-header-list-item">
+                <a href="{% url 'profile'%}">
+                    <span class="menu-icon">
+                        <i class="fa fa-light fa-user-tag"></i>
+                    </span>
+                    <span class="menu-title">Profil</span>
+                </a>
+            </li>
+            <li class="nj-header-list-item">
+                <a href="{% url 'logout' %}">
+                    <span class="menu-icon">
+                        <i class="fa fa-regular fa-arrow-right-from-bracket"></i>
+                    </span>
+                    <span class="menu-title">Logout</span>
+                </a>
+            </li>
+            {% else %}
+            <li class="nj-header-list-item nj-header-list-item-btn">
+                <a href="{% url 'login'%}?next={{request.path}}">
+                    <span class="menu-icon">
+                        <i class="fa fa-thin fa-arrow-right-to-bracket"></i>
+                    </span>
+                    <span class="menu-title">Login</span>
+                </a>
+            </li>
+
+            <li class="nj-header-list-item nj-header-list-item-btn">
+                <a href="{% url 'register'%}">
+                    <span class="menu-icon">
+                        <i class="fa fa-thin fa-user-plus"></i>
+                    </span>
+                    <span class="menu-title">Sign Up</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+        <div id="nj-header-trigger" class="nj-header-trigger" onclick="toggleSidebar(this)">
+            <span></span>
+        </div>
+    </header>
+    <main class="nj-main-content">
+        {% include 'messages.html' %}
+        <div class="nj-content">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </main>
+    <footer class="nj-footer">
+        <small>
+            © 2022 made with
+            <span>&#10084;</span> by -
+            <a target="_blank" href="#"> Anjara </a>
+        </small>
+    </footer>
+    <script type="text/javascript" src="{% static 'my/js/NjMain.js'%}"></script>
+    <script language="JavaScript" type="text/javascript"
+        src="{% static 'bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+    <!-- Jquery -->
+    <script language="JavaScript" type="text/javascript" src="{% static 'jquery/js/jquery.min.js'%}"></script>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+.mycontainer {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-around;
+    font-family: Arial, Helvetica, sans-serif;
+    align-items: left;
+    justify-content: center;
+    align-content: center;
+}
+
+.container-wrapper {
+    padding: 3em;
+    margin: 2em;
+    padding: auto;
+    width: max-content;
+    height: max-content;
+    background: rgba(163, 146, 146, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 0.4px 0.4px rgba(128, 128, 128, 0.109),
+        0 1px 1px rgba(128, 128, 128, 0.155),
+        0 2.1px 2.1px rgba(128, 128, 128, 0.195),
+        0 4.4px 4.4px rgba(128, 128, 128, 0.241),
+        0 12px 12px rgba(14, 13, 13, 0.35);
+}
+
+.form__field {
+    display: flex;
+    opacity: 0.5;
+    border-radius: 16px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.sign-text {
+    text-align: center;
+    font-size: 2em;
+    margin-top: -2%;
+
+}
+
+
+
+.icon {
+    padding: 10px;
+    min-width: auto;
+    text-align: center;
+    display: flex;
+}
+
+.myitem {
+    opacity: 0.9;
+    border: 1px solid teal;
+    outline: none;
+}
+
+form {
+    margin: 2em auto 2em auto;
+}
+
+.input {
+    padding: 20px;
+    border-radius: 30px;
+    border: none;
+    font-size: 20px;
+    margin: 5px;
+}
+
+.sign_btn {
+    border-radius: 2rem;
+}
+
+/* buttons hover */
+.mycontainer .container-wrapper button:hover {
+    transform: translatey(3px);
+    box-shadow: 0 0.4px 0.4px rgba(128, 128, 128, 0.109),
+        0 1px 1px rgba(128, 128, 128, 0.155),
+        0 2.1px 2.1px rgba(128, 128, 128, 0.195),
+        0 4.4px 4.4px rgba(128, 128, 128, 0.241),
+        0 12px 12px rgba(128, 128, 128, 0.35);
+}
+
+.mycontainer .container-wrapper button:focus {
+    outline: none;
+}
+
+/* buttons hover Animation */
+.mycontainer .container-wrapper button:hover {
+    animation: ani9 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes ani9 {
+    0% {
+        transform: translateY(3px);
+    }
+
+    100% {
+        transform: translateY(3px);
+    }
+}

@@ -1,0 +1,39 @@
+{% extends 'baselog.html' %}
+{% load static %}
+
+{% block headContent %}
+<link rel="stylesheet" href="{% static 'users/css/Njlog.css'%}">
+{% endblock headContent %}
+
+
+
+{% block content %}
+<div class="mycontainer">
+    <div class="container-wrapper">
+        <h2 class="sign-text">Login!</h2>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form__field">
+                {% if field.name == "username" %}
+                <i class="fa fa-user icon"></i>
+                {% else %}
+                <i class="fa fa-key icon"></i>
+                {% endif %}
+                {{ field }}
+            </div>
+            {% endfor %}
+            <div class="form__btn">
+                <button class="w-100 btn btn-outline-secondary sign_btn" type="submit">Login
+                    <i class="fa fa-thin fa-user"></i>
+                </button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already have an account? <a class="ml-2" href="{% url 'register' %}">Sign up</a>
+            </small>
+        </div>
+    </div>
+</div>
+{% endblock %}

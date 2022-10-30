@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card card-default rounded-0 shadow ">
+    <div class="card-body">
+        <form method="post">{% csrf_token %}
+            <p>Are you sure you want to delete "{{ object }}"?</p>
+            <a class="btn btn-outline-danger" onclick="history.back()">Cancel </a>
+            <input class="btn btn-outline-success" type="submit" value="Confirm">
+        </form>
+    </div>
+</div>
+{% endblock %}

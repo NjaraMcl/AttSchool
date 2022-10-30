@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .noundline {
+        text-decoration: none;
+    }
+
+    h1 {
+        color: white;
+    }
+
+    .not-visible {
+        display: none;
+    }
+
+</style>
+
+<div class="text-center">
+    <div class="spinner-border" role="status" id="spinner"></div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card card-default rounded-0 shadow ">
+        <form method="POST" action="{% url 'appO:confirm' class_id=class_id %}">
+            <div class="card-header">
+                <div class="d-flex w-100 align-items-center justify-content-between">
+                    <h4 class="card-title fw-bold" id="catp"></h4>
+                    <div class="tools">
+                        <label for="fname">Date:</label>
+                        <input type="date" id="mydate" name="mydate" value="1999-12-15">
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="container-fluid">
+                    <table class="table table-hover table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Nom et Prénoms</th>
+                                <th scope="col" class="text-center">Présence</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body-box">
+                        </tbody>
+                    </table>
+                </div>
+                <button class="w-100 btn sign_btn" type="submit">Submit</button>
+
+            </div>
+        </form>
+    </div>
+</div>
+<script type="module">
+    const spinner = document.getElementById('spinner')
+    const tabletitle = document.getElementById('catp')
+    const tableBody = document.getElementById('table-body-box')
+
+    if ('{{listStuds}}') {
+        setTimeout(() => {
+            spinner.classList.add('not-visible')
+            tabletitle.innerHTML += `{{ klasname }} ({{ skooY }})`
+            tableBody.innerHTML += `
+            {% csrf_token %}
+            {% for student in listStuds %}
+                <tr>
+                    <td class="text-center">
+                        {{ student.nom }} {{ student.prenom }}
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-outline-success active">
+                                <input type="radio" name="{{ student.student_code }}" id="option1" autocomplete="off"
+                                    value="present" checked> Present
+                            </label>
+                            <label class="btn btn-outline-danger">
+                                <input type="radio" name="{{ student.student_code }}" id="option2" autocomplete="off"
+                                    value="absent"> Absent
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+              `
+        }, 500)
+    } else {
+        setTimeout(() => {
+            spinner.classList.add('not-visible')
+            tableBody.innerHTML += `
+                <p>Failed to load data</p>
+                `
+        }, 500)
+    }
+</script>
+{% endblock %}

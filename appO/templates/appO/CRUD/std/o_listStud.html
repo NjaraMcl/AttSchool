@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .noundline {
+        text-decoration: none;
+    }
+
+    .not-visible {
+        display: none;
+    }
+
+</style>
+<div class="text-center">
+    <div class="spinner-border" role="status" id="spinner"></div>
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card card-default rounded-0 shadow ">
+        <div class="card-header">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+                <h4 class="card-title fw-bold" id="catp"></h4>
+                <div class="tools">
+                    <a class="btn btn-outline-info rounded-0 bg-gradient btn-sm" href="{% url 'appO:AddStudentes' %}"
+                        title="Add Studdent"><i class="fa fa-solid fa-plus"></i> Add Student
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="container-fluid">
+                <table class="table table-hover table-borderless">
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-center">Student Code</th>
+                            <th scope="col" class="text-center">Nom et Prénoms</th>
+                            <th scope="col" class="text-center">Gender</th>
+                            <th scope="col" class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body-box">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    const spinner = document.getElementById('spinner')
+    const tete = document.getElementById('catp')
+    const tableBody = document.getElementById('table-body-box')
+
+    if ('{{listStuds}}') {
+        setTimeout(() => {
+            spinner.classList.add('not-visible')
+            tete.innerHTML += `
+            {% for classe in classes %}
+            Student list for {{ classe.Classe_name }}({{ classe.school_year }}) ,Prof Resp: {{ classe.teacher_responsable.nom }} {{ classe.teacher_responsable.prenom }}
+            {% endfor %}
+            `
+            tableBody.innerHTML += `
+                {% for student in listStuds %}
+                    <tr>
+                        <td class="text-center">{{ student.student_code }}</td>
+                        <td class="text-center">{{ student.nom }} {{ student.prenom }}</td>
+                        <td class="text-center">{{ student.gender }}</td>
+                        <td class="text-center">
+                            <a class="btn btn-outline-info btn-sm view-data" href="{{ student.get_absolute_url }}">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <a class="btn btn-outline-primary btn-sm edit-data" title="Edit" href="{% url 'appO:UpdateStudentes' student.slug %}">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a class="btn btn-outline-danger btn-sm delete-data" title="Delete" href="{% url 'appO:DeleteStudentes' student.slug %}">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                `
+        }, 500)
+    } else {
+        setTimeout(() => {
+            spinner.classList.add('not-visible')
+            tableBody.innerHTML += `
+                <p>Failed to load data</p>
+                `
+        }, 500)
+    }
+</script>
+{% endblock %}
