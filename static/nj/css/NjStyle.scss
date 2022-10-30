@@ -141,6 +141,8 @@ body {
 
         ul {
             list-style-type: none;
+            justify-content: center;
+            align-items: center;
         }
 
         .nj-header-list {
@@ -148,6 +150,7 @@ body {
             justify-content: space-between;
             align-items: center;
             margin-right: 20px;
+            flex-shrink: 1;
 
             .nj-header-list-list {
                 justify-content: center;
@@ -511,6 +514,7 @@ body {
     }
 
     .nj-footer {
+        background: var(--myliniarcolor1);
         position: relative;
         bottom: 0;
         padding: 0 20px;
