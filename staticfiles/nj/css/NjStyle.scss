@@ -141,6 +141,8 @@ body {
 
         ul {
             list-style-type: none;
+            justify-content: center;
+            align-items: center;
         }
 
         .nj-header-list {
@@ -148,8 +150,11 @@ body {
             justify-content: space-between;
             align-items: center;
             margin-right: 20px;
+            flex-shrink: 1;
 
             .nj-header-list-list {
+                justify-content: center;
+                align-items: center;
 
                 a {
                     text-decoration: none;
@@ -384,6 +389,22 @@ body {
                         }
                     }
                 }
+
+                .nj-sub-side-list {
+                    display: none;
+                }
+
+                .nj-sub-side-list.is_visible {
+                    display: flex;
+                    flex-basis: var(--nj-sidebare-width);
+                    opacity: 0.8;
+                    padding: 0 20px;
+
+                    ul {
+                        margin-bottom: 10px;
+                        list-style: none;
+                    }
+                }
             }
         }
 
@@ -509,6 +530,7 @@ body {
     }
 
     .nj-footer {
+        background: var(--myliniarcolor1);
         position: relative;
         bottom: 0;
         padding: 0 20px;
@@ -535,6 +557,10 @@ body {
                 color: $text-color;
             }
         }
+    }
+
+    .card-body {
+        color: #000000;
     }
 
     @include breakpoints(lg) {}
