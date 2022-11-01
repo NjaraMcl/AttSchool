@@ -66,10 +66,32 @@
         <span>
             {% if user.is_authenticated %}
             <li class="nj-side-item">
-                <a href="{% url 'profile'%}">
-                    <img src="{{ user.profile.image.url }}" class="user_avatar">
-                    <span class="menu-title">{{ user.get_username }}</span>
-                </a>
+                <div onclick="myFunction(this)">
+                    <a href="#">
+                        <img src="{{ user.profile.image.url }}" class="menu-icon user_avatar">
+                        <span class="menu-title">{{ user.get_username }}</span>
+                    </a>
+                </div>
+                <div class="nj-sub-side-list" id="nj-sub-side-list">
+                    <ul>
+                        <li class="menu-item">
+                            <a href="{% url 'profile'%}">
+                                <span class="menu-icon">
+                                    <i class="fa fa-light fa-user-tag"></i>
+                                </span>
+                                <span class="menu-title">Profil</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#">
+                                <span class="menu-icon">
+                                    <i class="fa fa-regular fa-arrow-right-from-bracket"></i>
+                                </span>
+                                <span class="menu-title">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             {% else %}
             <li class="nj-side-item">

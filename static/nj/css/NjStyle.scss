@@ -389,6 +389,22 @@ body {
                         }
                     }
                 }
+
+                .nj-sub-side-list {
+                    display: none;
+                }
+
+                .nj-sub-side-list.is_visible {
+                    display: flex;
+                    flex-basis: var(--nj-sidebare-width);
+                    opacity: 0.8;
+                    padding: 0 20px;
+
+                    ul {
+                        margin-bottom: 10px;
+                        list-style: none;
+                    }
+                }
             }
         }
 
@@ -541,6 +557,10 @@ body {
                 color: $text-color;
             }
         }
+    }
+
+    .card-body {
+        color: #000000;
     }
 
     @include breakpoints(lg) {}
