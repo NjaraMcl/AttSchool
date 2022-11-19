@@ -37,6 +37,9 @@ class Classe(models.Model):
     date_added = models.DateTimeField(default=timezone.now)
     date_updated = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name_plural = "classes"
+
     def __str__(self):
         return (
             self.Classe_name
