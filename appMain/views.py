@@ -1,5 +1,11 @@
 from django.shortcuts import redirect
 from django.views import generic
+from django.db.models import Q
+
+
+class Aboutusview(generic.TemplateView):
+    template_name = "appMain/aboutus.html"
+    extra_context = {"page_title": "About Us"}
 
 
 class gHomeview(generic.TemplateView):
