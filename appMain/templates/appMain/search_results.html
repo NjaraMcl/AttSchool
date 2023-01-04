@@ -2,4 +2,44 @@
 
 {% block content %}
 <h1>Search Results</h1>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card card-default rounded-0 shadow ">
+        <div class="card-header">
+            <div class="d-flex w-100 align-items-center justify-content-between">
+                <h2>Search Results :
+                    {% if query %}
+                    <p>
+                        {% with results.count as total_results %}
+                        Found {{ total_results }} result{{ total_results|pluralize }}
+                        {% endwith %}
+                    </p>
+                    {% endif %}
+                </h2>
+
+                <div class="tools">
+                    <form id="myForm" action="{% url 'mainApp:v_search' %}" method="get" class="form-inline">
+                        <input name="search" type="text" class="form-control" id="" placeholder="name, matricul,..">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            {% if query %}
+            {% for student in results %}
+
+            {% empty %}
+            <h3>No results found.</h3>
+            {% endfor %}
+            {% endif %}
+            <form action="{% url 'home' %}" class="form-inline" method="get">
+                <button type="submit" class="btn btn-primary btn-lg mb-2"><i
+                        class="fa fa-solid fa-circle-chevron-left"></i> Back Home
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock content %}

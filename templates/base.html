@@ -31,6 +31,15 @@
         <div class="nj-logo-wrapper">
             <a href="{% url 'appMain:home' %}" class="nj-logo"><img src="{% static 'img/mytitle.png' %}" alt="Logo"></a>
         </div>
+        {% if user.is_authenticated %}
+        {% if user.is_overseer %}
+        <form action="">
+            <input name="search" type="text" class="form-control mr-sm-2" id="" placeholder="name, matricul,..">
+            <button type="submit" class="btn btn-outline-primary my-2 my-sm-0">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+        {% else %}
         <ul class="nj-header-list">
             {% if user.is_authenticated %}
             <li class="nj-header-list-item">
@@ -69,6 +78,8 @@
             </li>
             {% endif %}
         </ul>
+        {% endif %}
+        {% endif %}
         <div id="nj-header-trigger" class="nj-header-trigger" onclick="toggleSidebar(this)">
             <span></span>
         </div>

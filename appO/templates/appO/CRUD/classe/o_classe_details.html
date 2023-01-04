@@ -1,5 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="text-center">
+    <div class="spinner-border" role="status" id="spinner"></div>
+</div>
 
+<script type="module">
+    const spinner = document.getElementById('spinner')
+    const tableBody = document.getElementById('body-box')
+
+    if ('{{classes}}') {
+        setTimeout(() => {
+            spinner.classList.add('not-visible')
+            tableBody.innerHTML += `
+                        
+                `
+        }, 500)
+    } else {
+        setTimeout(() => {
+            spinner.classList.add('not-visible')
+            tableBody.innerHTML += `
+                <p>Failed to load data</p>
+                `
+        }, 500)
+    }
+</script>
 {% endblock %}
