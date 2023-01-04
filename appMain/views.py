@@ -1,6 +1,36 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.views import generic
 from django.db.models import Q
+from appMain.models import Teacher, Classe, Eleve
+import django
+
+
+class Searchresultsview(generic.TemplateView):
+    search_models = []  # Add your models here, in any way you find best.
+    search_results = []
+    for model in search_models:
+        fields = [
+            x for x in model._meta.fields if isinstance(x, django.db.models.CharField)
+        ]
+        search_queries = [Q(**{x.name + "__contains": search_query}) for x in fields]
+        q_object = Q()
+        for query in search_queries:
+            q_object = q_object | query
+
+        results = model.objects.filter(q_object)
+        search_results.append(results)
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get("search")
+        if query == "":
+            query = "None"
+        results = Eleve.objects.filter(
+            Q(first_name__icontains=query)
+            | Q(nom__icontains=query)
+            | Q(prenom__icontains=query)
+        )
+        context = {"query": query, "results": results, "page_title": "Search Results"}
+        return render(request, self.template_name, context)
 
 
 class Aboutusview(generic.TemplateView):
